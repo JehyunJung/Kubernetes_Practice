@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: rs-nginx-lab
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      name: apache
+      app: webui
+      rel: stable    
+  template:
+    metadata:
+      name: httpd-pod
+      labels:
+        name: apache
+        app: webui
+        rel: stable
+    spec:
+      containers: 
+        - name: httpd-container
+          image: httpd:2.2

@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: deploy-web
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: web
+  template:
+    metadata:
+      labels:
+        app: web
+    spec:
+      containers:
+      - image: smlinux/hpa-example
+        name: c1
+        ports:
+        - containerPort: 80
+        resources: 
+          requests: 
+            cpu: 200m  
+          limits:
+            cpu: 500m
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: svc-web
+spec:
+  type: ClusterIP
+  clusterIP: 10.96.100.100
+  ports:
+  - port: 80
+    targetPort: 80
+  selector:
+    app: web

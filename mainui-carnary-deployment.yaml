@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mainui-carnary
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: mainui
+      version: carnary
+  template:
+    metadata:
+      labels:
+        app: mainui
+        version: carnary
+    spec:
+      containers:
+      - image: nginx:1.15
+        name: nginx
+        ports: 
+          - containerPort: 80
